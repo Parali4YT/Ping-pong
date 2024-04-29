@@ -20,16 +20,16 @@ class GameSprite(sprite.Sprite):
 class Player(GameSprite):
     def update_r(self):
         keys = key.get_pressed()
-       if keys[K_UP] and self.rect.y > 5:
-           self.rect.y -= self.speed
-       if keys[K_DOWN] and self.rect.y < win_height - 80:
-           self.rect.y += self.speed
-   def update_l(self):
-       keys = key.get_pressed()
-       if keys[K_w] and self.rect.y > 5:
-           self.rect.y -= self.speed
-       if keys[K_s] and self.rect.y < win_height - 80:
-           self.rect.y += self.speed
+        if keys[K_UP] and self.rect.y > 5:
+            self.rect.y -= self.speed
+        if keys[K_DOWN] and self.rect.y < win_height - 80:
+            self.rect.y += self.speed
+    def update_l(self):
+        keys = key.get_pressed()
+        if keys[K_w] and self.rect.y > 5:
+            self.rect.y -= self.speed
+        if keys[K_s] and self.rect.y < win_height - 80:
+            self.rect.y += self.speed
 
 
 #игровая сцена:
@@ -37,11 +37,12 @@ back = (200, 255, 235)
 win_width = 600
 win_height = 500
 window = display.set_mode((win_width, win_height))
-window.full(back)
+window.fill(back)
 
 
 game = True
-clock = Time.Clock()
+clock = time.Clock()
+finish = False
 FPS = 60
 
 racket1 = Player('racket.png', 30, 200, 4, 50, 150)
@@ -54,17 +55,17 @@ font = font.Font(None, 35)
 lose1 = font.render('Player 1 Lose!', True,(180,0,0))
 lose2 = font.render('Player 2 Lose!', True,(180,0,0))
 
-speed_x = 3
-speed_y = 3
+speed_x = 7
+speed_y = 7
 
 while game:
     for e in event.get():
-        if e.type = QUIT:
+        if e.type == QUIT:
             game = False
-    if finish = True:
+    if finish != True:
         window.fill(back)
         racket1.update_l()
-        racket2.update_2()
+        racket2.update_r()
         ball.rect.x += speed_x
         ball.rect.y += speed_y
 
@@ -81,7 +82,7 @@ while game:
             game_over = True
 
         
-        if ball.rect.x > 0:
+        if ball.rect.x > win_width:
             finish = True
             window.blit(lose2, (200,200))
             game_over = True
